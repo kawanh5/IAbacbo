@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyIA Bac bo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 36px;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #sequence {
+            margin-top: 20px;
+        }
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        #message {
+            margin-top: 10px;
+            color: #ccc;
+        }
+        .logo {
+            width: 150px;
+            margin-top: 30px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        .calculator-container {
+            margin-top: 20px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .calculator-container h2 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .calculator-container input[type="number"] {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            width: 100px;
+        }
+        .calculator-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .calculator-container button:hover {
+            background-color: #777;
+        }
+        .bankroll-results {
+            margin-top: 20px;
+            color: #fff;
+            text-align: left;
+        }
+        /* Estilos para o formulário de login */
+        #loginForm {
+            margin-top: 50px;
+        }
+        #loginForm input {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+</head><link rel="icon" href="https://tse3.mm.bing.net/th?id=OIP.qJbnNCnHAo1N1dClxTeC7gHaGu&pid=Api&P=0&h=180" type="image/x-icon">
+
+<body>
+   
+    
+  <iframe src="https://b2xbet.net/?btag=1777564" width="100%" height="600px" frameborder="0"></iframe>
+    <div id="robot"></div>
+    <button onclick="changeColor('blue')">Selecionar Azul</button>
+    <button onclick="changeColor('red')">Selecionar Vermelho</button>
+    <button onclick="getResult()">Obter Entrada</button>
+    <button onclick="clearSequence()">Limpar Sequência</button>
+    
+
+    <button onclick="recordResult('✅win')">Win</button>
+    <button onclick="recordResult('❌loss')">Loss</button>
+
+    <h2>Selecione acima de 4 cores:</h2>
+    <div id="sequence"></div>
+
+    <h2>Resultado:</h2>
+    <div id="message"></div>
+    <button id="shareButton" onclick="shareResult()" style="margin-top: 10px;">Compartilhar</button>
+
+    <div class="calculator-container" style="display: none;">
+        <h2>Calculadora de Gerenciamento de Banca</h2>
+        <input type="number" id="inputAmount" placeholder="Digite o valor">
+        <button onclick="calculateBankroll()">Calcular</button>
+        <div id="bankrollResults" class="bankroll-results"></div>
+    </div>
+
+
+    <div id="results"></div>
+  
+  
+
+    <button onclick="clearResults()">Limpar Histórico</button>
+
+    <script>
+        var sequence = []; // Array para armazenar a sequência de cores selecionadas
+        var results = []; // Array para armazenar os resultados dos cliques em "Win" e "Loss"
+
+        function changeColor(color) {
+            var robot = document.getElementById('robot');
+            robot.style.backgroundColor = color;
+            sequence.push(color); // Adiciona a cor selecionada à sequência
+            updateSequenceDisplay(); // Atualiza a exibição da sequência
+        }
+
+        function clearSequence() {
+            sequence = []; // Limpa a sequência
+            updateSequenceDisplay(); // Atualiza a exibição da sequência
+        }
+
+        function getResult() {
+            var messageDiv = document.getElementById('message');
+            messageDiv.textContent = "Obtendo entrada...";
+
+            setTimeout(function() {
+                var lastFour = sequence.slice(-4); // Obtém as últimas quatro cores selecionadas
+                var resultSum = lastFour.reduce((acc, val) => acc + (val === 'blue' ? 1 : -1), 0); // Soma dos resultados
+
+                if (resultSum > 0) {
+                    messageDiv.textContent = "Apostar na cor vermelha ❤️";
+                } else if (resultSum < 0) {
+                    messageDiv.textContent = "Apostar na cor azul 💙";
+                } else {
+                    messageDiv.textContent = "Nenhuma Entrada!";
+                }
+
+                // Limpa o resultado após 10 segundos
+                setTimeout(function() {
+                    clearResult();
+                }, 10000);
+
+            }, 4000); // 4 segundos
+        }
+
+        function clearResult() {
+            var messageDiv = document.getElementById('message');
+            messageDiv.textContent = "";
+        }
+
+        function updateSequenceDisplay() {
+            var sequenceDiv = document.getElementById('sequence');
+            sequenceDiv.innerHTML = ''; // Limpa o conteúdo anterior
+
+            sequence.forEach(color => {
+                var dot = document.createElement('div');
+                dot.classList.add('color-dot');
+                dot.style.backgroundColor = color;
+                sequenceDiv.appendChild(dot);
+            });
+        }
+// Função para compartilhar o resultado no Telegram
+function shareResult() {
+    var resultMessage = document.getElementById('message').textContent;
+    var groupLink = encodeURIComponent("https://t.me/+vZUQvw7N3ZI3YTYx"); // Link direto para o grupo
+    var telegramLink = "tg://msg_url?url=" + groupLink + "&text=" + encodeURIComponent(resultMessage);
+    window.open(telegramLink, "_blank");
+}
+
+
+        // Função para compartilhar o resultado nas redes sociais
+        function shareResult() {
+            var resultMessage = document.getElementById('message').textContent;
+
+            // Opções para compartilhar a mensagem nas redes sociais
+            if (confirm("Compartilhar esta mensagem no grupo do Telegram?\n\n" + resultMessage)) {
+                shareOnTelegram(resultMessage); // Chama a função de compartilhamento do Telegram
+            }
+        }
+
+        var bankrollVisible = false;
+
+        function toggleBankroll() {
+            var calculatorContainer = document.querySelector('.calculator-container');
+            if (bankrollVisible) {
+                calculatorContainer.style.display = 'none';
+                clearBankrollResults(); // Limpa os resultados ao esconder a calculadora
+            } else {
+                calculatorContainer.style.display = 'block';
+            }
+            bankrollVisible = !bankrollVisible;
+        }
+
+        function calculateBankroll() {
+            var inputAmount = parseFloat(document.getElementById('inputAmount').value);
+            var bankrollResults = document.getElementById('bankrollResults');
+            clearBankrollResults(); // Limpa os resultados anteriores
+
+            for (var i = 1; i <= 30; i++) {
+                var calculatedAmount = (inputAmount * 0.10) * i;
+                var dividedAmount = calculatedAmount / 4; // Divide o valor calculado em 4 partes iguais
+                for (var j = 1; j <= 4; j++) {
+                    var resultElement = document.createElement('div');
+                    resultElement.textContent = "Dia " + i + ", Parte " + j + ": $" + dividedAmount.toFixed(2);
+                    bankrollResults.appendChild(resultElement);
+                }
+            }
+        }
+
+        function clearBankrollResults() {
+            var bankrollResults = document.getElementById('bankrollResults');
+            bankrollResults.innerHTML = '';
+        }
+
+        function recordResult(outcome) {
+            // Obter a hora atual
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+            var formattedTime = hours + ":" + minutes + ":" + seconds;
+
+            // Adicionar o resultado e o horário atual ao array de resultados
+            results.push({outcome: outcome, time: formattedTime});
+
+            // Atualizar a exibição dos resultados na página
+            updateResultsDisplay();
+        }
+
+        function updateResultsDisplay() {
+            var resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Limpar os resultados anteriores
+
+            // Iterar sobre os resultados e exibi-los na página
+            results.forEach(result => {
+                var resultElement = document.createElement('div');
+                // Exibir o resultado e o horário
+                resultElement.textContent = result.outcome.charAt(0).toUpperCase() + result.outcome.slice(1) + " - " + result.time;
+                resultsDiv.appendChild(resultElement);
+            });
+        }
+
+        // Função para limpar o histórico de resultados
+        function clearResults() {
+            results = []; // Limpar o array de resultados
+            updateResultsDisplay(); // Atualizar a exibição na página
+        }
+    </script>
+</body>
+</html>
